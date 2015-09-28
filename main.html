@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Big Numbers</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="theme-color" content="#119C11">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Droid+Serif|Droid+Sans"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+
+  </head>
+  <body>
+
+    <h1>Where is One Million?</h1>
+    <section>
+      <div class="question">
+        <h2>Your Guess</h2>
+        <span class="left">Zero</span> <span class="right">One Billion</span>
+        <input type="range" min="0" max="1000000000" step="1" value="500000000" id="numberline">
+
+        <h2>Mean Guess</h2>
+        <span class="left">Zero</span> <span class="right">One Billion</span>
+        <canvas id="mean" data-val="{{.Mean}}"></canvas>
+      </div>
+    </section>
+
+  </body>
+
+  <script type="text/javascript" src="/static/mean.js"></script>
+  <script type="text/javascript">
+    window.onload = function(){
+      var getCookies = function(){
+        var m = {};
+        var c = document.cookie.split(';');
+        for (var i = 0; i < c.length; i++){
+          p = c[i].split('=', 2)
+          m[p[0]] = p[1];
+        }
+        return m;
+      };
+
+      var clientId = getCookies().clientId;
+
+      var ws = new WebSocket("ws://numbers.tomnomnom.com:8080/answers");
+      ws.onopen = function(){
+        console.log("WS Open!");
+      };
+      ws.onerror = function(error){
+        console.log('WS Error: ' + error);
+      };
+      ws.onclose = function(){
+        console.log('WS Closed');
+      };
+
+      var meanCanvas = document.getElementById('mean');
+      meanout(meanCanvas);
+      
+      ws.onmessage = function(msg){
+        meanCanvas.dataset.val = parseInt(msg.data, 10)
+      };
+
+      var numberline = document.getElementById('numberline');
+      numberline.onchange = function(){
+        ws.send(clientId+':'+this.value+'\n')
+      };
+    };
+  </script>
+</html>
