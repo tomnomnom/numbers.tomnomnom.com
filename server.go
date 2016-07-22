@@ -89,7 +89,7 @@ func main() {
 	}))
 
 	http.Handle("/static/", http.FileServer(http.Dir(".")))
-	go http.ListenAndServe(":8080", nil)
+	go http.ListenAndServe(":80", nil)
 
 	// Meat
 	clients := make(map[Client]interface{})

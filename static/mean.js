@@ -16,7 +16,7 @@ var meanout = function(elem){
 
         // Clear
         c.save();
-        c.fillStyle = 'rgb(255,255,255)';
+        c.fillStyle = '#FBFBFB';
         c.rect(0, 0, w, h);
         c.fill();
         c.closePath();
@@ -29,24 +29,6 @@ var meanout = function(elem){
         c.beginPath();
         c.moveTo(lineStart.x, lineStart.y);
         c.lineTo(lineEnd.x, lineEnd.y);
-        c.stroke();
-        c.closePath();
-        c.restore();
-
-        // Left cap
-        c.save();
-        c.beginPath();
-        c.moveTo(lineStart.x, lineStart.y-(h/4));
-        c.lineTo(lineStart.x, lineStart.y+(h/4))
-        c.stroke();
-        c.closePath();
-        c.restore();
-
-        // Right cap
-        c.save();
-        c.beginPath();
-        c.moveTo(lineEnd.x, lineEnd.y-(h/4));
-        c.lineTo(lineEnd.x, lineEnd.y+(h/4))
         c.stroke();
         c.closePath();
         c.restore();

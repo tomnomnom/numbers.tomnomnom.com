@@ -26,6 +26,10 @@
       </div>
     </section>
 
+    <section class="qrcode" width="">
+      <img src="/static/qrcode.png">
+    </section>
+
   </body>
 
   <script type="text/javascript" src="/static/mean.js"></script>
@@ -43,7 +47,7 @@
 
       var clientId = getCookies().clientId;
 
-      var ws = new WebSocket("ws://numbers.tomnomnom.com:8080/answers");
+      var ws = new WebSocket("ws://numbers.tomnomnom.com/answers");
       ws.onopen = function(){
         console.log("WS Open!");
       };
